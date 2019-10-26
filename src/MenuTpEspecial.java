@@ -5,15 +5,15 @@ public class MenuTpEspecial {
 		//----------------------------------------------------------------------------------------------------------------------------------------------------------
 		//EMPRESAS, ESTABLECIMIENTOS Y RODEOS
 		SociedadGanadera monarca = new SociedadGanadera("Monarca");
-		SociedadGanadera rodeo_sur = new SociedadGanadera("rodeo_sur");
 		SociedadGanadera rodeo_norte = new SociedadGanadera("rodeo_norte");
 		SociedadGanadera establecimiento_central = new SociedadGanadera("Establecimiento_Central");
+		SociedadGanadera rodeo_sur = new SociedadGanadera("rodeo_sur");
 		//----------------------------------------------------------------------------------------------------------------------------------------------------------
 		
 		
 		//----------------------------------------------------------------------------------------------------------------------------------------------------------
 		//CAMIONES
-		Camion manterola = new Camion("mack", "MPS145", 6);
+		Camion camion_cisterna = new Camion("mack", "MPS145", 6);
 		//----------------------------------------------------------------------------------------------------------------------------------------------------------
 		
 		
@@ -25,9 +25,9 @@ public class MenuTpEspecial {
 		Condicion hereford = new Raza("hereford");
 		Condicion mayor_edad = new Edad(12);
 		Condicion menor_edad = new Not(new Edad(8));
-		Condicion por_peso = new Peso(135);
+		Condicion por_peso = new Peso(500);
 		Condicion and = new And(menor_edad, mayor_edad);
-		Condicion or = new Or(menor_edad, mayor_edad);
+		Condicion or = new Or(menor_edad, por_peso);
 		CondicionGrupal peso_mayor = new PromedioPeso(1500);
 		CondicionGrupal edad_mayor = new PromedioEdad(10);
 		CondicionGrupal and_grupal = new AndPorGrupo(peso_mayor, edad_mayor);
@@ -60,7 +60,7 @@ public class MenuTpEspecial {
 		Animal vaca5 = new Animal(5, 750, 14, "simmental", "hembra", true, 9);
 		Animal vaca6 = new Animal(6, 1000, 10, "charolais", "hembra", false, 6);
 		Animal vaca7 = new Animal(7, 950, 20, "beefmaster", "hembra", false, 1);
-		Animal vaca8 = new Animal(8, 1200, 15, "beefmaster", "hembra", false, 12);
+		Animal vaca8 = new Animal(8, 1200, 15, "beefmaster", "hembra", false, 2);
 		Animal vaca9 = new Animal(9, 350, 6, "charolais", "hembra", false, 0);
 		Animal vaca10 = new Animal(10, 300, 3, "hereford", "hembra", false, 0);
 		Animal vaca11 = new Animal(11, 200, 2, "hereford", "hembra", false, 0);
@@ -70,13 +70,12 @@ public class MenuTpEspecial {
 		   
 		
 		//----------------------------------------------------------------------------------------------------------------------------------------------------------
-		//EMPRESA "lOS GITANOS" (CARGADO DE RODEOS)
-		monarca.add(establecimiento_central);
+		//EMPRESA "Monarca" (CARGADO DE RODEOS)
 		monarca.add(vaca1);
-		monarca.add(rodeo_norte);
 		monarca.add(vaca10);
 		monarca.add(vaca11);
 		monarca.add(toro);
+		monarca.add(establecimiento_central);
 		establecimiento_central.add(rodeo_sur);
 		establecimiento_central.add(vaca2);
 		establecimiento_central.add(vaca3);
@@ -84,6 +83,7 @@ public class MenuTpEspecial {
 		rodeo_sur.add(vaca4);
 		rodeo_sur.add(vaca5);
 		rodeo_sur.add(vaca6);
+		monarca.add(rodeo_norte);
 		rodeo_norte.add(vaca7);
 		rodeo_norte.add(vaca8);
 		//----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -133,15 +133,45 @@ public class MenuTpEspecial {
 
 		
 		
+		//----------------------------------------------------------------------------------------------------------------------------------------------------------
+		//LISTADO DE ANIMALES SEGUN SU PESO SUPERA LOS 500 KG //
+		System.out.println("ANIMALES CON PESO SUPERIOR A 500kg"+monarca.es_apto(por_peso));
 		
+		
+		
+		//----------------------------------------------------------------------------------------------------------------------------------------------------------
+		//LISTADO DE ANIMALES CON EDADES MENORES A 8 AÑOS O CON UN PESO MAYOR A 500 KG //
+		System.out.println("ANIMALES CON EDADES MENORES A 8 AÑOS O CON UN PESO MAYOR A 500 KG"+monarca.es_apto(or));
+		
+		
+		
+		//----------------------------------------------------------------------------------------------------------------------------------------------------------
+		//RETORNA SI HAY ANIMALES CON UN PESO MAYOR A 1500 KG Y CON EDAD MAYORES A 10 AÑOS //
+		System.out.println("HAY ANIMALES CON UN PESO MAYOR A 1500 KG Y CON EDAD MAYORES A 10 AÑOS ? Respuesta: " + and_grupal.se_cumple(monarca));
+
+		
+		
+		//----------------------------------------------------------------------------------------------------------------------------------------------------------
+		//RETORNA SI HAY ANIMALES CON UNA EDAD MAYOR A 10 AÑOS O CON UN PESO MAYOR A 1500KG //
+		System.out.println("HAY ANIMALES CON UN PESO MAYOR A 1500 KG Y CON EDAD MAYORES A 10 AÑOS ? Respuesta: " + or_grupal.se_cumple(monarca));
+		//----------------------------------------------------------------------------------------------------------------------------------------------------------
+		
+		
+		
+		//RETORNA SI NO HAY ANIMALES CON UN PESO MAYOR A 1500KG //
+		System.out.println("HAY ANIMALES CON UN PESO MAYOR A 1500 KG Y CON EDAD MAYORES A 10 AÑOS ? Respuesta: " + not_grupal.se_cumple(monarca));
+		//----------------------------------------------------------------------------------------------------------------------------------------------------------
 		
 		
 		
 		System.out.println("_________________________________________________________");
-		System.out.println("la vaquita  "+ministerio_AP.verifica(vaca2));
-		System.out.println("CANTIDAD DE ANIMALES DE ESTABLECIMIENTO : " + monarca.total_animal());
-		manterola.cargar(monarca, charolais);
-		System.out.println("QUEDO EN "+ monarca.total_animal());
+		System.out.println("verifica animal "+ministerio_AP.verifica(vaca2));
+		
+		System.out.println("_________________________________________________________");
+		System.out.println("CANTIDAD DE ANIMALES DEL ESTABLECIMIENTO ANTES DE SER CARGADO : " + monarca.total_animal());
+		camion_cisterna.cargar(monarca, charolais);
+		System.out.println("CANTIDAD DE ANIMALES DEL ESTABLECIMIENTO LUEGO DE SER CARGADO : " + monarca.total_animal());
+		
 		
 	
 				
