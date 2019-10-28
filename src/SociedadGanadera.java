@@ -50,7 +50,7 @@ public class SociedadGanadera extends ComponenteGanadero {
 	
 	public double promedio_edad(){
 		int edad = total_edad();
-		int cantidad = lista_ganadera.size();
+		int cantidad = total_animal();
 		return edad / cantidad;
 	}
 	
